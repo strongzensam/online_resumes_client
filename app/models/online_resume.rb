@@ -33,7 +33,7 @@
 
 
 class OnlineResume
-  attr_accessor :first_name, :last_name, :email, :phone, :id, :bio, :linked_in, :twitter, :blog, :online_resume, :github, :photo
+  attr_accessor :id, :first_name, :last_name, :email, :phone, :bio, :linked_in, :twitter, :blog, :online_resume, :github, :photo, :skills
 
   def initialize(hash)
     @id = hash["id"]
@@ -48,16 +48,17 @@ class OnlineResume
     @online_resume_url = hash["online_resume"]
     @githzxub_url = hash["github"]
     @photo = hash["photo"]
+    @skills = hash["skills"]
   end 
 
   def self.find(id)
-    resume_hash = Unirest.get().body
-    OnlineResume.new(hash)
+    resume_hash = Unirest.get("http://localhost:3000/students/#{id}.json").body
+    OnlineResume.new(resume_hash)
   end
 
   def self.all
     resumes = []
-    resume_hashes = Unirest.get("http://localhost:3000/resumes.json")
+    resume_hashes = Unirest.get("http://localhost:3000/students.json")
     resume_hashes.each do |hash|
       resumes << OnlineResume.new(hash)
     end
@@ -78,7 +79,7 @@ class OnlineResume
   #   Unirest.delete("http://localhost:3000/resumes.json").body
   # end
 
-end
+# end
 
 
 
