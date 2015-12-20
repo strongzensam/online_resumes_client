@@ -1,4 +1,7 @@
 class OnlineResumesController < ApplicationController
-  def index
+  
+  def show
+    @resume = OnlineResume.find(params[:id])
   end
+
 end
